@@ -75,9 +75,10 @@ const resolvers = {
         nuevoProyecto: async (_, {input}, ctx) => {
             try {
                 const proyecto = new Proyecto(input);
-
+               
+                console.log('Desde el resolver', ctx)
                 // asociar el creador
-                proyecto.creador = ctx.usuario.id;
+                //proyecto.creador = ctx.usuario.id;
 
                 // almacenarlo en la BD
                 const resultado = await proyecto.save();
@@ -86,42 +87,6 @@ const resolvers = {
             } catch (error) {
                 console.log(error);
             }
-        },
-        actualizarProyecto: async (_, {id, input}, ctx) => {
-            // Revisar si el proyecto existe o no
-            let proyecto = await Proyecto.findById(id);
-
-            if(!proyecto) {
-                throw new Error('Proyecto no encontrado');
-            }
-
-            // Revisar que si la persona que trata de editarlo, es el creador
-            if(proyecto.creador.toString() !== ctx.usuario.id) {
-                throw new Error('No tienes las credenciales para editar');
-            }
-
-            // Guardar el proyecto
-            proyecto = await Proyecto.findOneAndUpdate({ _id: id}, input, { new: true });
-            return proyecto;
-        },
-        eliminarProyecto: async (_, {id}, ctx) => {
-            // Revisar si el proyecto existe o no
-            let proyecto = await Proyecto.findById(id);
-
-            if(!proyecto) {
-                throw new Error('Proyecto no encontrado');
-            }
-
-            // Revisar que si la persona que trata de editarlo, es el creador
-            if(proyecto.creador.toString() !== ctx.usuario.id) {
-                throw new Error('No tienes las credenciales para editar');
-            }
-
-            // Eliminar
-            await Proyecto.findOneAndDelete({ _id : id });
-
-            return "Proyecto Eliminado";
-
         }
     }
 }

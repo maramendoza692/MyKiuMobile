@@ -14,7 +14,7 @@ const typeDefs = gql`
         token: String
     }
     input ProyectoInput {
-        proyecto: String!
+        nombre: String!
     }
     input UsuarioInput{
         nombre: String!
@@ -33,8 +33,6 @@ const typeDefs = gql`
 
         # Proyectos
         nuevoProyecto(input: ProyectoInput ) : Proyecto
-        actualizarProyecto(id : ID!,  input: ProyectoInput) : Proyecto
-        eliminarProyecto(id: ID!) : String
 
     }
 `;
