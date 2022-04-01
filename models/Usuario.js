@@ -3,18 +3,19 @@ const mongoose = require('mongoose');
 const UsuariosSchema = mongoose.Schema({
     nombre: {
         type: String,
-        requiered: true,
+        required: true,
         trim: true
     },
     email: {
         type: String,
-        requiered: true, //Campo obligatorio
-        trim: true, //Eliminar espacios
-        unique: true //Email registrado sólo una vez
+        required: true,
+        trim: true,
+        unique: true,
+        lowercase: true
     },
     password: {
         type: String,
-        requiered: true,
+        required: true,
         trim: true
     },
     registro: {
@@ -23,4 +24,4 @@ const UsuariosSchema = mongoose.Schema({
     }
 });
 
-module.exports = mongoose.model('Usuario', UsuariosSchema); 
+module.exports = mongoose.model('Usuario', UsuariosSchema);
